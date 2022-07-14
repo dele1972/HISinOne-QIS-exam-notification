@@ -1,5 +1,7 @@
 # HISinOne QIS -> Benachrichtigungen über bewertete Prüfungsleistungen
 
+Basiert auf dem Repository: [https://github.com/MrKrisKrisu/HISinOne-QIS-exam-notification](https://github.com/MrKrisKrisu/HISinOne-QIS-exam-notification)
+
 ## Was ist das?
 
 Ein Python Script, das sich für dich in iCMS einloggt und schaut, ob sich Änderungen (zum Beispiel eine neue
@@ -45,9 +47,21 @@ Informationen zum erstellen von Telegram Bots: [https://core.telegram.org/bots](
 
 ### Python Umgebung
 
-Die Module requests und lxml sind standardmäßig nicht installiert. Diese können mit pip nachinstalliert werden:
-> pip install requests
-> pip install lxml
+Die Module [`requests`](https://pypi.org/project/requests/), [`lxml`](https://pypi.org/project/lxml/) und [`Unidecode`](https://pypi.org/project/Unidecode/) sind standardmäßig nicht installiert. Diese können mit pip nachinstalliert werden:
+
+- per requirements
+
+```bash
+pip install -r requirements.txt
+```
+
+- oder manuell
+
+```bash
+pip install requests
+pip install lxml
+pip install Unidecode
+```
 
 ### Script installieren
 
