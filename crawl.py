@@ -13,56 +13,52 @@ from bs4 import BeautifulSoup
 import smtplib, ssl
 from email.message import EmailMessage
 from unidecode import unidecode
+import json
 
+appPath = "./"
 
-# Settings for icms
-icms_username = ''
-icms_password = ''
+# Öffne die JSON-Datei
+with open(appPath + "userdata.json", "r") as f:
+    # Lese die Daten als JSON-Objekt
+    data = json.load(f)
 
-# Settings for Telegram
-telegram_bot_token = '****'
-telegram_chatID = '****'
-
-# Settings for Mail
-port = 465  # For SSL
-smtp_server = ""
-user = ""
-password = ""
-sender_email = ""
-receiver_email = ""
+icms = data["icms"]
+telegram = data["telegram"]
+mail = data["mail"]
 
 # Define and create (empty) helper hash file
-hashfile = "examcheck.txt"
+hashfile = appPath + "examcheck.txt"
 open(hashfile, 'a').close()
 
 
 def mail_sendtext(mail_message, course):
+    print("Sende Mail ...")
     msg = EmailMessage()
     msg.set_content(mail_message)
     msg['Subject'] = "Es gibt Änderungen beim Notenspiegel: {}".format(course)
-    msg['From'] = "Noten-Bot <{}>".format(sender_email)
-    msg['To'] = receiver_email
+    msg['From'] = "Noten-Bot <{}>".format(mail["sender"])
+    msg['To'] = mail["receiver"]
 
     # Create a secure SSL context
     context = ssl.create_default_context()
 
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        server.login(user, password)
-        # server.sendmail(sender_email, receiver_email, msg)
+    with smtplib.SMTP_SSL(mail["smtp_server"], mail["port"], context=context) as server:
+        server.login(mail["user"], mail["password"])
         server.send_message(msg)
 
 
 def telegram_bot_sendtext(bot_message):
-    send_text = 'https://api.telegram.org/bot' + telegram_bot_token + '/sendMessage?chat_id=' \
-                + telegram_chatID + '&parse_mode=Markdown&text=' + bot_message
+    print("Sende Telegram Nachricht ...")
+    send_text = 'https://api.telegram.org/bot' + telegram["bot_token"] + '/sendMessage?chat_id=' \
+                + telegram["chatID"] + '&parse_mode=Markdown&text=' + bot_message
     response = requests.get(send_text)
     return response.json()
 
 
 def get_icms_data():
     payload = {
-        "asdf": icms_username,
-        "fdsa": icms_password,
+        "asdf": icms["username"],
+        "fdsa": icms["password"],
         "name": "submit"
     }
 
@@ -70,13 +66,13 @@ def get_icms_data():
     session_requests.headers.update({
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36'})
 
-    login_url = "https://icms.hs-hannover.de/qisserver/rds?state=user&type=0"
+    login_url = icms["url"] + "?state=user&type=0"
     print("Rufe Startseite auf")
     result = session_requests.get(login_url)
 
     # login...
     print("Einloggen...")
-    url_loginPost = "https://icms.hs-hannover.de/qisserver/rds?state=user&type=1&category=auth.login&startpage=portal.vm"
+    url_loginPost = icms["url"] + "?state=user&type=1&category=auth.login&startpage=portal.vm"
     result = session_requests.post(
         url_loginPost,
         data=payload
@@ -98,8 +94,8 @@ def get_icms_data():
 
     print("Rufe Notenuebersicht Seite auf...")
     return session_requests.get(
-        "https://icms.hs-hannover.de/qisserver/rds?state=notenspiegelStudent&next=list.vm&nextdir=qispos/notenspiegel/student&createInfos=Y&struct=auswahlBaum&nodeID=auswahlBaum%7Cabschluss%3Aabschl%3D84%2Cstgnr%3D1&expand=0&asi=" + asi,
-        headers=dict(referer="https://icms.hs-hannover.de/qisserver/rds?state=sitemap&topitem=leer&breadCrumbSource=portal")
+        icms["url"] + "?state=notenspiegelStudent&next=list.vm&nextdir=qispos/notenspiegel/student&createInfos=Y&struct=auswahlBaum&nodeID=auswahlBaum%7Cabschluss%3Aabschl%3D84%2Cstgnr%3D1&expand=0&asi=" + asi,
+        headers=dict(referer=icms["url"] + "?state=sitemap&topitem=leer&breadCrumbSource=portal")
     )
 
 
@@ -158,7 +154,10 @@ def do_action(course, status, grade):
     message += "\nModul: " + course + \
       "\nStatus: " + status + \
       "\nNote: " + grade
+    # Aktionen durchführen
+    # Telegram Nachricht senden
     #telegram_bot_sendtext(message)
+    # Mail senden
     mail_sendtext(unidecode(message), unidecode(course))
 
 

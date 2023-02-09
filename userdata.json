@@ -1,0 +1,20 @@
+{
+  "path": "./",
+  "icms": {
+    "username": "Hier deinen ICMS Benutzernamen eintragen",
+    "password": "Hier dein ICMS Passwort eintragen",
+    "url": "https://icms.hs-hannover.de/qisserver/rds"
+  },
+  "telegram": {
+    "bot_token": "Hier deinen Telegram Bot Token eintragen",
+    "chatID": "Hier deine Telegram Chat ID eintragen"
+  },
+  "mail": {
+    "port": 465,
+    "smtp_server": "Hier deine SMTP Mail Server Adresse eintragen",
+    "user": "Hier deinen Mail Server Anmeldenamen eintragen",
+    "password": "Hier dein Mail Server Passwort eintragen",
+    "sender": "Hier die Absende Mail Adresse eintragen",
+    "receiver": "Hier die Empfänger Mail Adresse eintragen"
+  }
+}
