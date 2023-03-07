@@ -1,6 +1,6 @@
 # HISinOne QIS -> Benachrichtigungen über bewertete Prüfungsleistungen
 
-Basiert auf dem Repository: [https://github.com/MrKrisKrisu/HISinOne-QIS-exam-notification](https://github.com/MrKrisKrisu/HISinOne-QIS-exam-notification)
+Dies ist ein Fork von [MrKrisKrisu/HISinOne-QIS-exam-notification](https://github.com/MrKrisKrisu/HISinOne-QIS-exam-notification). Der Aufbau ist etwas modularer programmmiert und zusätzlich wurden die Benachrichtigungskanäle E-Mail und Discord Message (Webhook) hinzugefügt - alles in der „mal eben hinzufügen”-Manier.
 
 ## Was ist das?
 
@@ -32,6 +32,8 @@ Alternative Skripts für weitere Hochschulen:
 
 ## Installationsanleitung
 
+Die Konfiguration erfolgt über die Datei `userdata.json`. Dort werden die notwendigen icms Login-Daten hinterlegt und alle Ausgabekanäle konfiguriert. **Hinweis**: Aktuell ist Telegramm statisch deaktiviert. In einer späteren Version könnte man die präferierte Benachrichtigungsmethode auch dynamisch (z. B. über die `userdata.json` regeln.
+
 ### Telegram einrichten
 
 #### Telegram Bot erstellen
@@ -44,6 +46,16 @@ Informationen zum erstellen von Telegram Bots: [https://core.telegram.org/bots](
 * Erstelle eine neue Gruppe und füge deinen Bot hinzu, sowie den [TelegramRawBot](https://t.me/RawDataBot)
 * Schreibe nun eine Nachricht in die Gruppe, der RawBot wird dir antworten
 * Schreibe dir deine ID heraus, die unter **message -> from -> id** steht
+
+### Discord Webhook
+
+1. Óffne Discord per Browser
+2. Óffne mit einem Rechtsklick auf deinen Server: Servereinstellungen/Integrationen
+3. Erstelle einen WebHook
+
+Im Anschluss kannst du dort auch die Webhook-URL kopieren, welche du in der `userdata.json` beim Schlüssel `whUrl` angeben musst.
+
+**Veraltetet**: In der `userdata.json` werden zusätzlich die Schlüssel `token`, `clientID`, `cIdAllgemein` und `cIdMeintest` belegt. Dabei handelt es sich um einen Testlauf, direkt mit der Discord-API zu kommunizieren. Aktuell wird jedoch der Discord WebHook verwendet.
 
 ### Python Umgebung
 
