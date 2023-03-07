@@ -15,7 +15,7 @@ from email.message import EmailMessage
 from unidecode import unidecode
 import json
 
-appPath = "./"
+appPath = "/home/lederich/dev/HISinOne-QIS-exam-notification/"
 
 # Öffne die JSON-Datei
 with open(appPath + "userdata.json", "r") as f:
@@ -25,6 +25,7 @@ with open(appPath + "userdata.json", "r") as f:
 icms = data["icms"]
 telegram = data["telegram"]
 mail = data["mail"]
+discord = data["discord"]
 
 # Define and create (empty) helper hash file
 hashfile = appPath + "examcheck.txt"
@@ -45,6 +46,22 @@ def mail_sendtext(mail_message, course):
     with smtplib.SMTP_SSL(mail["smtp_server"], mail["port"], context=context) as server:
         server.login(mail["user"], mail["password"])
         server.send_message(msg)
+
+
+def discord_bot_sendtext(discord_message, course):
+    msg = {
+            "username": discord["whName"],
+            "avatar_url": discord["avatarUrl"],
+            "content": "",
+            "embeds": [{
+                "title": "Es gibt Änderungen beim icms Notenspiegel! → {}".format(course),
+                "description": discord_message,
+                "color": 0x98fb98
+                }]
+            }
+    print("Sende Discord Nachricht ...")
+    res = requests.post(discord["whUrl"], json = msg)
+    return res
 
 
 def telegram_bot_sendtext(bot_message):
@@ -157,6 +174,8 @@ def do_action(course, status, grade):
     # Aktionen durchführen
     # Telegram Nachricht senden
     #telegram_bot_sendtext(message)
+    # Discord Nachricht senden
+    discord_bot_sendtext(unidecode(message), unidecode(course))
     # Mail senden
     mail_sendtext(unidecode(message), unidecode(course))
 
