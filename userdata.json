@@ -16,5 +16,13 @@
     "password": "Hier dein Mail Server Passwort eintragen",
     "sender": "Hier die Absende Mail Adresse eintragen",
     "receiver": "Hier die Empfänger Mail Adresse eintragen"
+  },
+  "discord": {
+    "token": "Hier deinen Discord Bot Token eintragen",
+    "clientID": "Hier deine Discord Client ID eintragen",
+    "cIdAllgemein": "Hier deine Channel ID eintragen",
+    "whName": "Noten Bot",
+    "whUrl": "Hier deine Discord WebHook-URL eintragen",
+    "avatarUrl": "Hier eine Avatar Image URL eintragen"
   }
 }
