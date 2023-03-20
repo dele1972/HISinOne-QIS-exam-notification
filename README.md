@@ -98,3 +98,32 @@ begrenzen:
 Du musst dein zentrales Passwort für deinen Hochschulaccount in **Klartext** in dieses Script speichern. Achte daher
 bitte darauf, dass es nur in einer gesicherten Umgebung läuft und durch geeignete Berechtigungen von dem Zugriff Dritter
 geschützt ist.
+
+## Arbeiten in diesem Repo/Fork
+
+Dieser Fork kann öffentlich bearbeitet werden. Sofern das nicht funktioniert, wird das geändert. Es wäre schön, wenn Änderungen im Vorfeld besprochen werden.
+
+**Hinweis**: Da es sich um einen Fork handelt, wird in der Web-Oberfläche schnell mal auf das Original Repo gewechselt, darauf bitte aufpassen!
+
+Ansonsten sollte man sich an folgenden Ablauf halten:
+
+1. Weboberfläche: Ein neues [**Issue anlegen**](https://github.com/dele1972/HISinOne-QIS-exam-notification/issues/new) für die Änderung die eingefügt werden soll.
+    - Die Änderungsvorhaben im Issue auch gleich beschreiben.
+
+2. Weboberfläche: Im Issue mit **assign yourself** den Vorgang auch gleich sich selbst zuweisen.
+
+3. Weboberfläche: Im erstellten Issue auch gleich **einen Branch** anlegene lassen.
+    - Auf der rechten Seite des Issues: *Development / Create a branch*
+
+4. Lokal auf dem Rechner den **Branch ausschecken**.
+    - `git fetch origin`
+    - `git checkout <Branch-Name>`
+
+5. Änderungen lokal vornehmen, Testen(!) und letztendlich pushen.
+
+6. Weboberfläche: Einen **Pull Request anlegen** - *compare & pull request*
+    - **Hinweis**: An dieser Stelle muss das *base repository* von `MrKrisKrisu/HISinOne-QIS-exam-notification` auf `dele1972/HISinOne-QIS-exam-notification` geändert werden.
+
+7. Weboberfläche: Im Pull Request → *Files changed* → *Review Changes*
+
+8. Weboberfläche: Anschließend mit **Merge pull request** und **confirm merge** die Änderung in den *main* Branch übernehmen.
