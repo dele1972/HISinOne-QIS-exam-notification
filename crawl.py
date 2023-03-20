@@ -15,7 +15,7 @@ from email.message import EmailMessage
 from unidecode import unidecode
 import json
 
-appPath = "/home/lederich/dev/HISinOne-QIS-exam-notification/"
+appPath = os.path.dirname(__file__) + "/"
 
 # Öffne die JSON-Datei
 with open(appPath + "userdata.json", "r") as f:
